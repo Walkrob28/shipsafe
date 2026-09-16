@@ -12,7 +12,7 @@ from urllib.parse import urlparse, urljoin
 
 import httpx
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from detector import Finding, scan_secrets, scan_headers, score
@@ -135,6 +135,34 @@ async def scan(payload: dict):
 @app.get("/api/health")
 async def health():
     return {"ok": True}
+
+
+GRADE_COLORS = {"A": "#2bb673", "B": "#4fb84f", "C": "#f0a91b",
+                "D": "#f0651b", "F": "#e23b3b"}
+
+@app.get("/badge/{grade}")
+async def badge(grade: str):
+    """A shareable, embeddable shield showing ONLY the letter grade — never the
+    findings. Vibe-coders drop this in their README / post it to prove they shipped clean."""
+    g = grade.upper().replace(".SVG", "").strip()[:1]
+    color = GRADE_COLORS.get(g, "#8b93a7")
+    label, val = "\U0001F6E1 ShipSafe", g if g in GRADE_COLORS else "?"
+    lw, vw = 96, 34
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{lw+vw}" height="20" role="img" aria-label="ShipSafe: {val}">
+<linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
+<clipPath id="r"><rect width="{lw+vw}" height="20" rx="4" fill="#fff"/></clipPath>
+<g clip-path="url(#r)">
+<rect width="{lw}" height="20" fill="#0a0e17"/>
+<rect x="{lw}" width="{vw}" height="20" fill="{color}"/>
+<rect width="{lw+vw}" height="20" fill="url(#s)"/>
+</g>
+<g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11">
+<text x="{lw/2}" y="14">{label}</text>
+<text x="{lw+vw/2}" y="14" font-weight="bold">{val}</text>
+</g></svg>'''
+    return Response(content=svg, media_type="image/svg+xml",
+                    headers={"Cache-Control": "no-cache"})
+
 
 app.mount("/", StaticFiles(directory=BASE / "static", html=True), name="static")
 

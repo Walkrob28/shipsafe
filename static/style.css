@@ -65,3 +65,15 @@ main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:40px 22px 20px}
 .allclear{text-align:center;padding:30px;color:var(--ok);font-size:16px;font-weight:600}
 footer{max-width:760px;margin:0 auto;padding:24px 22px 40px;color:var(--muted);font-size:13px}
 @media(max-width:560px){.hero h1{font-size:34px}.scanbox{flex-direction:column}.scorecard{flex-direction:column;text-align:center}}
+
+.share{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:20px 22px;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.share-head{display:flex;flex-direction:column;gap:2px}
+.share-head strong{font-size:16px}
+.badge-img{height:26px;image-rendering:auto}
+.share-actions{display:flex;gap:10px;flex-wrap:wrap}
+.sbtn{background:var(--panel2);border:1px solid var(--line);color:var(--text);
+  padding:10px 16px;border-radius:10px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:.15s}
+.sbtn:hover{border-color:#36405c}
+.sbtn.primary{background:linear-gradient(120deg,var(--brand),var(--brand2));border:none;color:#04121a;font-weight:700}
+.sbtn.copied{border-color:var(--brand);color:var(--brand)}

@@ -84,12 +84,41 @@ function render(data) {
       ${f.evidence ? `<div class="evidence">found: ${esc(f.evidence)}</div>` : ""}`;
     box.appendChild(el);
   }
+  setupShare(g);
   $("#results").hidden = false;
   $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 const esc = s => String(s).replace(/[&<>"']/g, m =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+
+
+function setupShare(grade) {
+  const origin = window.location.origin;
+  const badgeUrl = `${origin}/badge/${grade}`;
+  document.querySelector("#badgeImg").src = badgeUrl;
+
+  const proud = ["A", "B"].includes(grade);
+  const text = proud
+    ? `My app just passed ShipSafe's security scan — grade ${grade}. Scan yours free before you ship:`
+    : `ShipSafe caught security holes in my app before I launched it. Check yours free in 30s:`;
+
+  document.querySelector("#shareX").onclick = () => {
+    const u = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(origin)}`;
+    window.open(u, "_blank", "noopener,width=560,height=480");
+  };
+  document.querySelector("#copyLink").onclick = e => copyTxt(origin, e.target, "Copy link");
+  document.querySelector("#copyBadge").onclick = e =>
+    copyTxt(`[![ShipSafe](${badgeUrl})](${origin})`, e.target, "Copy README badge");
+}
+
+function copyTxt(txt, btn, label) {
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = "Copied";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = label; btn.classList.remove("copied"); }, 1600);
+  }).catch(() => {});
+}
 
 $("#scanBtn").onclick = scan;
 $("#url").addEventListener("keydown", e => { if (e.key === "Enter") scan(); });
