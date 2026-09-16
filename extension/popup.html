@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+<header>
+  <span class="logo">🛡️</span>
+  <div>
+    <div class="brand">ShipSafe</div>
+    <div class="sub">Security check for the page you're on</div>
+  </div>
+</header>
+
+<main>
+  <div id="target" class="target"></div>
+  <button id="scanBtn" class="scan">Scan this page</button>
+  <p class="note">Only reads what any visitor can already see. Nothing is stored or changed. Scan sites you own.</p>
+
+  <div id="loading" class="loading" hidden>
+    <div class="spinner"></div><span>Reading this page the way a visitor would…</span>
+  </div>
+
+  <div id="result" class="result" hidden>
+    <div class="score">
+      <div id="grade" class="grade">—</div>
+      <div id="headline" class="headline"></div>
+    </div>
+    <div id="findings" class="findings"></div>
+    <button id="rescan" class="rescan">Scan again</button>
+  </div>
+
+  <div id="err" class="err" hidden></div>
+</main>
+<script src="detector.js"></script>
+<script src="analyze.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
