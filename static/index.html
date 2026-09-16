@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ShipSafe — see what a hacker sees, before you launch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="shield">🛡️</span> ShipSafe</div>
+  <div class="tagline">Security scan for AI-built apps — in plain English</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>See what a hacker sees<br/><span>before you launch.</span></h1>
+    <p class="sub">You built an app with AI. Great. But vibe-coded apps ship with exposed API keys, wide-open databases, and holes you can't see. Paste your app's link — ShipSafe checks it in 30 seconds and tells you, in plain English, exactly what's exposed and how to fix it.</p>
+
+    <div class="scanbox">
+      <input id="url" type="text" placeholder="yourapp.com" autocomplete="off" spellcheck="false"/>
+      <button id="scanBtn">Scan my app</button>
+    </div>
+    <label class="consent"><input type="checkbox" id="consent"/> I own this app (or have permission to scan it)</label>
+    <div id="err" class="err" hidden></div>
+    <p class="trust">🔒 We only look at what any visitor can already see — nothing is stored, nothing is changed.</p>
+  </section>
+
+  <section id="loading" class="loading" hidden>
+    <div class="spinner"></div>
+    <p id="loadingMsg">Loading your app the way a visitor would…</p>
+  </section>
+
+  <section id="results" class="results" hidden>
+    <div class="scorecard">
+      <div id="grade" class="grade">—</div>
+      <div class="score-detail">
+        <div id="scoreHeadline" class="score-headline"></div>
+        <div id="scoreUrl" class="score-url"></div>
+        <button id="rescanBtn" class="rescan">Scan another app</button>
+      </div>
+    </div>
+    <div id="findings" class="findings"></div>
+  </section>
+</main>
+
+<footer>
+  <span>ShipSafe checks for exposed API keys, open databases, downloadable secret files, and missing protections — the mistakes that leak real user data.</span>
+</footer>
+<script src="/app.js"></script>
+</body>
+</html>
